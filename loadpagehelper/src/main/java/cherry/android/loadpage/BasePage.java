@@ -3,6 +3,7 @@ package cherry.android.loadpage;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.view.LayoutInflater;
 import android.view.View;
 
 /**
@@ -10,19 +11,19 @@ import android.view.View;
  */
 
 public abstract class BasePage implements Page {
-
     private Context mContext;
     @LayoutRes
     private int mLayoutId;
 
-    public BasePage(@LayoutRes int layoutId) {
+    public BasePage(@NonNull Context context, @LayoutRes int layoutId) {
+        this.mContext = context;
         this.mLayoutId = layoutId;
     }
 
     @NonNull
     @Override
     public View getView() {
-        View view = View.inflate(this.mContext, this.mLayoutId, null);
+        View view = LayoutInflater.from(this.mContext).inflate(this.mLayoutId, null);
         convert(view);
         return view;
     }
