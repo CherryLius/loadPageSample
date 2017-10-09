@@ -26,6 +26,16 @@ public class BasePage extends AbstractPage {
         });
     }
 
+    @Override
+    public void onAttach() {
+
+    }
+
+    @Override
+    public void onDetach() {
+
+    }
+
     public void setOnRetryListener(OnRetryListener listener) {
         this.mListener = listener;
     }

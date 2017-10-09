@@ -13,4 +13,8 @@ public interface Page {
     View getView(@NonNull Context context);
 
     void convert(@NonNull View view);
+
+    void onAttach();
+
+    void onDetach();
 }

@@ -12,4 +12,5 @@ public class LoadingPage extends BasePage {
     public LoadingPage() {
         super(R.layout.layout_loading);
     }
+
 }

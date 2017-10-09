@@ -21,6 +21,7 @@ import java.util.List;
 /*public*/ class LoadPageLayout extends FrameLayout {
 
     private List<Page> mPages = new ArrayList<>();
+    private Page mCurrentPage;
 
     public LoadPageLayout(@NonNull Context context) {
         super(context);
@@ -48,16 +49,13 @@ import java.util.List;
         final Page page = getPageByClass(pageClass);
         if (page == null)
             throw new IllegalArgumentException("Page Not Config. " + pageClass);
-        if (getChildCount() > 0) {
-            removeAllViews();
-        }
         if (isMainThread()) {
-            addViewSafe(page.getView(getContext()));
+            addViewSafe(page);
         } else {
             post(new Runnable() {
                 @Override
                 public void run() {
-                    addViewSafe(page.getView(getContext()));
+                    addViewSafe(page);
                 }
             });
         }
@@ -76,13 +74,22 @@ import java.util.List;
         return Looper.myLooper() == Looper.getMainLooper();
     }
 
-    private void addViewSafe(@NonNull View view) {
+    private void addViewSafe(@NonNull Page page) {
+        final View view = page.getView(getContext());
         if (view == null)
             return;
+        if (getChildCount() > 0) {
+            removeAllViews();
+        }
+        if (mCurrentPage != null) {
+            mCurrentPage.onDetach();
+        }
         final ViewParent parent = view.getParent();
         if (parent != null && parent instanceof ViewGroup) {
             ((ViewGroup) parent).removeView(view);
         }
         addView(view);
+        mCurrentPage = page;
+        mCurrentPage.onAttach();
     }
 }

@@ -104,5 +104,16 @@ public class LoadPager {
         public void convert(@NonNull View view) {
             // do nothing
         }
+
+        @Override
+        public void onAttach() {
+            // do nothing
+        }
+
+        @Override
+        public void onDetach() {
+            // do nothing
+        }
+
     }
 }
