@@ -55,9 +55,9 @@ public final class LoadPageHelper {
         } else {
             throw new IllegalArgumentException("arguments should be Activity or View. now is " + target.getClass());
         }
-        if (parentView == null) {
-            throw new IllegalArgumentException("cannot catch parent view for target. " + target.getClass());
-        }
+//        if (parentView == null) {
+//            throw new IllegalArgumentException("cannot catch parent view for target. " + target.getClass());
+//        }
         LoadPager.WrapContent wrap = new LoadPager.WrapContent(parentView, originView, index);
         return new LoadPager(wrap, this.mConfig);
     }

@@ -1,5 +1,6 @@
 package cherry.android.loadpage;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
 
@@ -9,7 +10,7 @@ import android.view.View;
 
 public interface Page {
     @NonNull
-    View getView();
+    View getView(@NonNull Context context);
 
     void convert(@NonNull View view);
 }

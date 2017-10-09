@@ -1,30 +1,32 @@
 package cherry.android.loadpage;
 
-import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
-import android.view.LayoutInflater;
 import android.view.View;
 
 /**
- * Created by ROOT on 2017/9/29.
+ * Created by ROOT on 2017/10/9.
  */
 
-public abstract class BasePage implements Page {
-    private Context mContext;
-    @LayoutRes
-    private int mLayoutId;
+public class BasePage extends AbstractPage {
+    private OnRetryListener mListener;
 
-    public BasePage(@NonNull Context context, @LayoutRes int layoutId) {
-        this.mContext = context;
-        this.mLayoutId = layoutId;
+    public BasePage(@LayoutRes int layoutId) {
+        super(layoutId);
     }
 
-    @NonNull
     @Override
-    public View getView() {
-        View view = LayoutInflater.from(this.mContext).inflate(this.mLayoutId, null);
-        convert(view);
-        return view;
+    public void convert(@NonNull View view) {
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null)
+                    mListener.onRetry(view);
+            }
+        });
+    }
+
+    public void setOnRetryListener(OnRetryListener listener) {
+        this.mListener = listener;
     }
 }
