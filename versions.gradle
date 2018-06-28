@@ -6,8 +6,8 @@ def git = 'https://github.com/etlevent'
 def desc = 'Page with Loading Empty No Network'
 
 def versions = [:]
-versions.group = 'cherry.android.recyclerview'
-versions.version = '1.1.0'
+versions.group = 'ext.android.loadpage'
+versions.version = '1.0.0'
 versions.desc = desc
 versions.siteUrl = "${git}/loadPageSample"
 versions.gitUrl = "${versions.siteUrl}.git"
@@ -57,7 +57,7 @@ def addRepos(RepositoryHandler handler) {
     handler.google()
     handler.jcenter()
     handler.mavenCentral()
-    handler.maven { url uri('https://dl.bintray.com/dingling/Maven')}
+    handler.maven { url 'https://dl.bintray.com/dingling/Maven' }
     if (config.maven.localRepos) {
         handler.maven { url uri(config.maven.localRepos) }
     } else {

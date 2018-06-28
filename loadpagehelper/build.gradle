@@ -29,3 +29,8 @@ dependencies {
     api 'leon.java.function:function-interfaces:1.1.1'
     testImplementation 'junit:junit:4.12'
 }
+group = config.versions.group
+version = config.versions.version
+apply from: '../packaging.gradle'
+apply from: '../maven.gradle'
+apply from: '../bintray.gradle'
