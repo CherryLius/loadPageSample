@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import cherry.java.Function;
 import ext.android.loadpage.LoadPageHelper;
 import ext.android.loadpage.LoadPager;
 import ext.android.loadpage.OnRetryListener;
@@ -39,6 +38,7 @@ import ext.android.loadpage.Page;
 import ext.android.loadpage.sample.R;
 import ext.android.loadpage.sample.page.ErrorPage;
 import ext.android.loadpage.sample.page.LoadingPage;
+import ext.java8.function.Function;
 
 import static android.Manifest.permission.READ_CONTACTS;
 

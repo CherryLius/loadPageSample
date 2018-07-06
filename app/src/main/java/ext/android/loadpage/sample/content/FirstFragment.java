@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import ext.android.loadpage.LoadPageHelper;
 import ext.android.loadpage.LoadPager;
@@ -20,6 +21,7 @@ import ext.android.loadpage.sample.page.LoadingPage;
  */
 public class FirstFragment extends Fragment {
 
+    private TextView mTextView;
     private LoadPager loadPager;
 
     @Override
@@ -27,13 +29,16 @@ public class FirstFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_first, container, false);
+        mTextView = rootView.findViewById(R.id.tv);
         loadPager = LoadPageHelper.getDefault().wrap(rootView);
         return loadPager.getLoadLayout();
     }
 
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mTextView.setText("11111111111111111");
         view.postDelayed(new Runnable() {
             @Override
             public void run() {

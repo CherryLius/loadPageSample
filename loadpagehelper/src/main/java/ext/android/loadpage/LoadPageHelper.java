@@ -32,7 +32,16 @@ public final class LoadPageHelper {
         return _default;
     }
 
-    public LoadPager wrap(@NonNull Object target) {
+    public LoadPager wrap(@NonNull Activity activity) {
+        return wrapInternal(activity);
+    }
+
+    public LoadPager wrap(@NonNull View view) {
+        return wrapInternal(view);
+    }
+
+
+    private LoadPager wrapInternal(@NonNull Object target) {
         final ViewGroup parentView;
         final View originView;
         int index = 0;
@@ -44,14 +53,7 @@ public final class LoadPageHelper {
             originView = (View) target;
             parentView = (ViewGroup) originView.getParent();
             if (parentView != null) {
-                final int childCount = parentView.getChildCount();
-                for (int i = 0; i < childCount; i++) {
-                    final View child = parentView.getChildAt(i);
-                    if (child == originView) {
-                        index = i;
-                        break;
-                    }
-                }
+                index = parentView.indexOfChild(originView);
             }
         } else {
             throw new IllegalArgumentException("arguments should be Activity or View. now is " + target.getClass());
