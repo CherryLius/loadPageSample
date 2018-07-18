@@ -3,11 +3,11 @@ package ext.android.loadpage;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.util.ArrayMap;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 import ext.java8.function.Function;
 
@@ -22,6 +22,8 @@ public class LoadPager {
     private LoadPageHelper.Config mConfig;
 
     LoadPager(@NonNull WrapContent wrapContent, @Nullable LoadPageHelper.Config config) {
+        LoadPageHelper.checkNotNull(wrapContent);
+        LoadPageHelper.checkNotNull(config);
         this.mWrapContent = wrapContent;
         this.mConfig = config;
         init();
@@ -38,12 +40,13 @@ public class LoadPager {
         }
         mLoadPageLayout.addPage(new OriginPage(this.mWrapContent.originView));
         if (this.mConfig != null) {
-            final int length = this.mConfig.getPages().size();
-            List<Page> clonePages = new ArrayList<>(length);
-            for (int i = 0; i < length; i++) {
-                clonePages.add(AbstractPage.clone(this.mConfig.getPages().get(i)));
+            final Map<String, Page> configPageMap = this.mConfig.getPageMap();
+            final int length = configPageMap.size();
+            final Map<String, Page> clonePageMap = new ArrayMap<>(length);
+            for (Map.Entry<String, Page> entry : configPageMap.entrySet()) {
+                clonePageMap.put(entry.getKey(), AbstractPage.clone(entry.getValue()));
             }
-            mLoadPageLayout.setPages(clonePages);
+            mLoadPageLayout.addPages(clonePageMap);
             if (this.mConfig.firstPage() != null) {
                 showPage(this.mConfig.firstPage());
             }
@@ -55,10 +58,13 @@ public class LoadPager {
     }
 
     public void showPage(@NonNull Class<? extends Page> pageClass) {
+        LoadPageHelper.checkNotNull(pageClass);
         mLoadPageLayout.showPage(pageClass);
     }
 
     public <T> void showPage(@Nullable T t, @NonNull Function<T, Class<? extends Page>> map) {
+        LoadPageHelper.checkNotNull(t);
+        LoadPageHelper.checkNotNull(map);
         showPage(map.apply(t));
     }
 
@@ -67,6 +73,7 @@ public class LoadPager {
     }
 
     public <T extends Page> T getPage(@NonNull Class<T> pageClass) {
+        LoadPageHelper.checkNotNull(pageClass);
         return (T) mLoadPageLayout.getPageByClass(pageClass);
     }
 

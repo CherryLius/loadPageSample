@@ -3,11 +3,11 @@ package ext.android.loadpage;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.util.ArrayMap;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ROOT on 2017/9/29.
@@ -19,6 +19,10 @@ public final class LoadPageHelper {
 
     public void setConfig(@Nullable Config config) {
         this.mConfig = config;
+    }
+
+    public Config getConfig() {
+        return this.mConfig;
     }
 
     public static LoadPageHelper getDefault() {
@@ -63,16 +67,17 @@ public final class LoadPageHelper {
     }
 
     public static class Config {
-        private List<Page> mPages;
+        private Map<String, Page> mPageMap;
         private Class<? extends Page> firstPage;
 
         public Config() {
-            //loading err empty
-            mPages = new ArrayList<>(3);
+            mPageMap = new ArrayMap<>(3);
         }
 
         public Config addPage(@NonNull Page page) {
-            mPages.add(page);
+            checkNotNull(page);
+            final String pageName = page.getClass().getCanonicalName();
+            mPageMap.put(pageName, page);
             return this;
         }
 
@@ -81,12 +86,19 @@ public final class LoadPageHelper {
             return this;
         }
 
-        protected List<Page> getPages() {
-            return mPages;
+        protected Map<String, Page> getPageMap() {
+            return mPageMap;
         }
 
         protected Class<? extends Page> firstPage() {
             return this.firstPage;
         }
+    }
+
+    protected static @NonNull <T> T checkNotNull(final T reference) {
+        if (reference == null) {
+            throw new NullPointerException();
+        }
+        return reference;
     }
 }

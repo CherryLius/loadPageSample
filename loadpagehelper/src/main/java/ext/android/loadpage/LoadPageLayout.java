@@ -3,24 +3,24 @@ package ext.android.loadpage;
 import android.content.Context;
 import android.os.Looper;
 import android.support.annotation.AttrRes;
+import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.util.ArrayMap;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.FrameLayout;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ROOT on 2017/9/28.
  */
 
 /*public*/ class LoadPageLayout extends FrameLayout {
-
-    private List<Page> mPages = new ArrayList<>();
+    private Map<String, Page> mPageMap = new ArrayMap<>();
     private Page mCurrentPage;
 
     public LoadPageLayout(@NonNull Context context) {
@@ -36,16 +36,21 @@ import java.util.List;
     }
 
     public void addPage(@NonNull Page page) {
-        if (!this.mPages.contains(page))
-            this.mPages.add(page);
+        LoadPageHelper.checkNotNull(page);
+        if (!mPageMap.containsValue(page)) {
+            final String pageName = page.getClass().getCanonicalName();
+            mPageMap.put(pageName, page);
+        }
     }
 
-    public void setPages(List<Page> pages) {
-        if (pages != null)
-            this.mPages.addAll(pages);
+    public void addPages(Map<String, Page> map) {
+        if (map != null && !map.isEmpty()) {
+            mPageMap.putAll(map);
+        }
     }
 
-    public void showPage(Class<? extends Page> pageClass) {
+    public void showPage(@NonNull Class<? extends Page> pageClass) {
+        LoadPageHelper.checkNotNull(pageClass);
         final Page page = getPageByClass(pageClass);
         if (page == null)
             throw new IllegalArgumentException("Page Not Config. " + pageClass);
@@ -61,13 +66,10 @@ import java.util.List;
         }
     }
 
-    public Page getPageByClass(Class<? extends Page> pageClass) {
-        for (Page page : mPages) {
-            if (page.getClass().equals(pageClass)) {
-                return page;
-            }
-        }
-        return null;
+    @CheckResult
+    public Page getPageByClass(@NonNull Class<? extends Page> pageClass) {
+        final String pageName = pageClass.getCanonicalName();
+        return mPageMap.get(pageName);
     }
 
     public static boolean isMainThread() {
@@ -76,8 +78,12 @@ import java.util.List;
 
     private void addViewSafe(@NonNull Page page) {
         final View view = page.getView(getContext());
-        if (view == null)
+        if (view == null) {
             return;
+        }
+        if (mCurrentPage == page) {
+            return;
+        }
         if (getChildCount() > 0) {
             removeAllViews();
         }
