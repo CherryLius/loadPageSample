@@ -21,8 +21,13 @@ public final class LoadPageHelper {
         this.mConfig = config;
     }
 
-    public Config getConfig() {
-        return this.mConfig;
+    public Config newConfig() {
+        final Config config = new Config();
+        config.firstPage = this.mConfig.firstPage;
+        for (Page page : this.mConfig.getPageMap().values()) {
+            config.addPage(page);
+        }
+        return config;
     }
 
     public static LoadPageHelper getDefault() {
@@ -95,7 +100,8 @@ public final class LoadPageHelper {
         }
     }
 
-    protected static @NonNull <T> T checkNotNull(final T reference) {
+    protected static @NonNull
+    <T> T checkNotNull(final T reference) {
         if (reference == null) {
             throw new NullPointerException();
         }
