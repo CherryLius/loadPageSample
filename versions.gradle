@@ -7,7 +7,7 @@ def desc = 'Page with Loading Empty No Network'
 
 def versions = [:]
 versions.group = 'ext.android.loadpage'
-versions.version = '1.0.1'
+versions.version = '1.0.2'
 versions.desc = desc
 versions.siteUrl = "${git}/loadPageSample"
 versions.gitUrl = "${versions.siteUrl}.git"

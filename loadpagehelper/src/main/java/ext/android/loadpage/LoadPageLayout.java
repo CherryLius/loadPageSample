@@ -76,12 +76,13 @@ import java.util.Map;
         return Looper.myLooper() == Looper.getMainLooper();
     }
 
-    private void addViewSafe(@NonNull Page page) {
+    private void addViewSafe(@Nullable Page page) {
         final View view = page.getView(getContext());
         if (view == null) {
             return;
         }
         if (mCurrentPage == page) {
+            mCurrentPage.onAttach();
             return;
         }
         if (getChildCount() > 0) {
