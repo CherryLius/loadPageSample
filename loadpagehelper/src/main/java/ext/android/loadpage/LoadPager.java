@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import java.util.Map;
 
-import ext.java8.function.Function;
+import jdk8.function.Function;
 
 
 /**
@@ -86,7 +86,7 @@ public class LoadPager {
         private View originView;
         private int index;
 
-        public WrapContent(ViewGroup parentView, View originView, int index) {
+        WrapContent(ViewGroup parentView, View originView, int index) {
             this.parentView = parentView;
             this.originView = originView;
             this.index = index;

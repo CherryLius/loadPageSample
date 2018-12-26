@@ -38,7 +38,7 @@ import ext.android.loadpage.Page;
 import ext.android.loadpage.sample.R;
 import ext.android.loadpage.sample.page.ErrorPage;
 import ext.android.loadpage.sample.page.LoadingPage;
-import ext.java8.function.Function;
+import jdk8.function.Function;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -75,10 +75,10 @@ public class FunctionActivity extends AppCompatActivity implements LoaderCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_function);
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView = findViewById(R.id.email);
         populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mPasswordView = findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -90,7 +90,7 @@ public class FunctionActivity extends AppCompatActivity implements LoaderCallbac
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        Button mEmailSignInButton = findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

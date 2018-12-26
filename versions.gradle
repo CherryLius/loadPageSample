@@ -7,7 +7,7 @@ def desc = 'Page with Loading Empty No Network'
 
 def versions = [:]
 versions.group = 'ext.android.loadpage'
-versions.version = '1.0.2'
+versions.version = '1.0.3'
 versions.desc = desc
 versions.siteUrl = "${git}/loadPageSample"
 versions.gitUrl = "${versions.siteUrl}.git"
@@ -33,7 +33,7 @@ config.bintray = bintray
 
 def maven = [:]
 //def nexus = 'http://192.168.39.102:8081/nexus'
-def nexus = 'http://common.homelabs.cn:8081/nexus'
+def nexus = 'http://common.homelabs.in:8081/nexus'
 def nexusContent = "${nexus}/content"
 maven.userName = getLocalProperties().getProperty('maven.userName')
 maven.password = getLocalProperties().getProperty('maven.password')
@@ -59,12 +59,12 @@ def addRepos(RepositoryHandler handler) {
     handler.google()
     handler.jcenter()
     handler.mavenCentral()
-    handler.maven { url 'https://dl.bintray.com/dingling/Maven' }
     if (config.maven.localRepos) {
         handler.maven { url uri(config.maven.localRepos) }
     } else {
         println 'you can use local repos with maven.local=xxx in local.properties.'
     }
+    handler.maven { url 'https://dl.bintray.com/dingling/Maven' }
 //    handler.maven { url config.maven.nexusPublicUrl }
 }
 

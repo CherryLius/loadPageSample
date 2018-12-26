@@ -19,7 +19,7 @@ import java.util.Map;
  * Created by ROOT on 2017/9/28.
  */
 
-/*public*/ class LoadPageLayout extends FrameLayout {
+class LoadPageLayout extends FrameLayout {
     private Map<String, Page> mPageMap = new ArrayMap<>();
     private Page mCurrentPage;
 
